@@ -23,19 +23,16 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(express.json());
 
-// Attach prisma and socket.io to request object
 app.use((req, res, next) => {
   req.prisma = prisma;
   req.io = io;
   next();
 });
 
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/boards', boardRoutes);
 app.use('/api/tasks', taskRoutes);
 
-// Socket.IO connection handling
 io.on('connection', (socket) => {
   console.log('Client connected:', socket.id);
 
